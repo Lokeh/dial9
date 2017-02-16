@@ -17,6 +17,7 @@ Back-end:
 - [x] Streaming state using Server-Sent Events
 - [ ] Secret-based SMS API
 - [ ] Test suite
+- [ ] Logging (email/SMS/file)
 
 Web front end:
 - [ ] UX/UI
