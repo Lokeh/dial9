@@ -46,6 +46,8 @@ defmodule Dial9.Router do
       send_message(conn, Poison.encode! state)
     end)
     |> Stream.run
+
+    conn
   end
 
   defp send_message(conn, data) do
