@@ -1,19 +1,32 @@
 # Dial9
 
-**TODO: Add description**
+Dial9 allows me to allow specific people to access my apartment's callbox.
+
+Once added to the list in `users.secrets.exs`, they can enable their number for a short time.
+
+Dialing my apartment # on the callbox while they are enabled will dial their phone, instead of mine.
+
+This is built using just Plug. I will probably refactor it to use ✨ Phoenix ✨ at some point.
+
+## To do
+
+Back-end:
+- [x] Generate TwiML to forward call
+- [x] Change number dialed based on user selection
+- [x] Reset number dialed after set time
+- [x] Streaming state using Server-Sent Events
+- [ ] Secret-based SMS API
+
+Web front end:
+- [ ] UX/UI
+- [ ] User selection
+- [ ] Receive app state stream
+
+Mobile front end:
+- [ ] UX/UI
+- [ ] User selection
+- [ ] Receive app state stream
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `dial9` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [{:dial9, "~> 0.1.0"}]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/dial9](https://hexdocs.pm/dial9).
-
+Coming soon!
