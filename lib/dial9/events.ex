@@ -10,6 +10,7 @@ defmodule Dial9.Events do
     GenEvent.start_link name: @name
   end
 
+  @spec emit_update(%Dial9.State{}) :: :ok
   def emit_update(new_state) do
     GenEvent.notify @name, {:update, new_state}
   end
