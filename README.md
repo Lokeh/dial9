@@ -16,6 +16,7 @@ Back-end:
 - [x] Reset number dialed after set time
 - [x] Streaming state using Server-Sent Events
 - [ ] Secret-based SMS API
+- [ ] Test suite
 
 Web front end:
 - [ ] UX/UI
