@@ -3,17 +3,6 @@ defmodule Dial9.State do
   @moduledoc """
   State store
   Get, set and reset the dialer's state
-
-  ## Examples
-
-      iex> Dial9.State.get
-      %{user: %Dial9.User{name: "Will", number: "503-939-8737"}}
-
-      iex> Dial9.State.select_user("Georgia", 0)
-      %{user: %Dial9.User{name: "Georgia", number: ""}}
-
-      iex> Dial9.State.reset
-      %{user: %Dial9.User{name: "Will", number: "503-939-8737"}}
   """
   @name __MODULE__
 
