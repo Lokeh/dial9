@@ -15,6 +15,7 @@ Back-end:
 - [x] Change number dialed based on user selection
 - [x] Reset number dialed after set time
 - [x] Streaming state using Server-Sent Events
+- [ ] Users endpoint
 - [ ] Secret-based SMS API
 - [ ] Test suite
 - [ ] Logging (email/SMS/file)

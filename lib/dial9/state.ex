@@ -7,9 +7,11 @@ defmodule Dial9.State do
   @name __MODULE__
 
   defstruct [
-    user: %Dial9.User{},
+    selected: %Dial9.User{},
     locked: false,
-    timeout: 0, # seconds
+    timeout: 300, # 10th of seconds
+    time_left: 0,
+    users: Dial9.User.all
   ]
 
   @spec start_link :: {:ok, pid} | {:error, any}
@@ -27,7 +29,7 @@ defmodule Dial9.State do
     case Dial9.User.select(name) do
       {:error, reason} -> {:error, reason}
       user ->
-        GenServer.cast @name, {:update_user, user, timeout}
+        GenServer.cast @name, {:update_user, user, timeout*10}
     end
   end
 
@@ -54,27 +56,27 @@ defmodule Dial9.State do
   end
 
   @spec handle_cast({:update_user, %Dial9.User{}, integer}, %Dial9.State{}) :: {:noreply, %Dial9.State{}}
-  def handle_cast({:update_user, user, timeout}, _state) do
-    new_state = %Dial9.State{user: user, timeout: timeout, locked: true}
+  def handle_cast({:update_user, user, time_left}, _state) do
+    new_state = %Dial9.State{selected: user, time_left: time_left, locked: true}
     emit new_state
-    Process.send_after @name, :tick, 1000
+    Process.send_after @name, :tick, 100
     {:noreply, new_state}
   end
 
   @spec handle_info(:tick, %Dial9.State{}) :: {:noreply, %Dial9.State{}}
   def handle_info(:tick, state) do
     case state do
-      %Dial9.State{timeout: 1} ->
+      %Dial9.State{time_left: 1} ->
         new_state = %Dial9.State{}
         emit new_state
         {:noreply, new_state}
       state ->
-        new_state = Map.update(state, :timeout, 0, fn count ->
+        new_state = Map.update(state, :time_left, 0, fn count ->
           IO.puts count - 1
           count - 1
         end)
         emit new_state
-        Process.send_after @name, :tick, 1000
+        Process.send_after @name, :tick, 100
         {:noreply, new_state}
     end
   end

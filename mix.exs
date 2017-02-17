@@ -34,6 +34,7 @@ defmodule Dial9.Mixfile do
     {:ex_twiml, "~> 2.1.2"},
     {:credo, "~> 0.5", only: [:dev, :test]},
     {:dialyxir, "~> 0.4", only: [:dev], runtime: false},
-    {:poison, "~> 3.0"}]
+    {:poison, "~> 3.0"},
+    {:cors_plug, "~> 1.2"}]
   end
 end

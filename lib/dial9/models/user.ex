@@ -19,4 +19,8 @@ defmodule Dial9.User do
   def reset do
     %Dial9.User{}
   end
+
+  def all do
+    @users
+  end
 end

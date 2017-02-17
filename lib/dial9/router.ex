@@ -6,6 +6,7 @@ defmodule Dial9.Router do
   use Plug.Router
 
   plug Plug.Logger
+  plug CORSPlug
   plug Plug.Static, at: "/", from: "public/"
   plug :match
   plug :dispatch
@@ -19,14 +20,14 @@ defmodule Dial9.Router do
   get "/dial" do
     conn
     |> put_resp_content_type("application/xml")
-    |> send_resp(200, Dial9.DialView.render_view(Dial9.State.get.user.number))
+    |> send_resp(200, Dial9.DialView.render_view(Dial9.State.get.selected.number))
   end
 
   get "/select/:name" do
     case Dial9.State.get do
-      %Dial9.State{locked: true, timeout: timeout} -> conn |> send_resp(409, "Locked for #{timeout}s")
+      %Dial9.State{locked: true, time_left: time_left} -> conn |> send_resp(409, "Locked for #{time_left}s")
       _ ->
-        case Dial9.State.select_user(name, 10) do # wait for 3s
+        case Dial9.State.select_user(name, 30) do # wait for 30s
           {:error, reason} -> conn |> send_resp(400, reason)
           :ok ->
             conn |> send_resp(200, "OK")
