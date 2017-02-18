@@ -29,6 +29,10 @@ interface AppSource {
   };
 };
 
+const host = process.env.NODE_ENV === 'development' ?
+  'http://localhost:4000' :
+  '';
+
 class App extends React.Component<null, AppSource> {
   eventSource: Subscription;
   constructor() {
@@ -48,19 +52,23 @@ class App extends React.Component<null, AppSource> {
   }
 
   componentWillMount() {
-    this.eventSource = fromEventSource<AppSource>('/state').subscribe(
+    this.eventSource = fromEventSource<AppSource>(`${host}/state`).subscribe(
       (res) => {
         this.setState(res);
         console.log(res);
       },
       (err) => {
-        throw err;
+        console.log(err);
       }
     );
   }
 
+  componentWillUnmount() {
+    this.eventSource.unsubscribe();
+  }
+
   selectUser(name: string) {
-    fetch(`/select/${name}`);
+    fetch(`${host}/select/${name}`);
   }
 
   render() {
