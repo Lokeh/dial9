@@ -1,10 +1,11 @@
 ///<reference path='sse.d.ts'/>
 import { Observable } from 'rxjs';
 
-export function fromEventSource<T>(url: string, options?: sse.IEventSourceInit) {
-    return new Observable<T>((subscriber) => {
+export function fromEventSource(url: string, options?: sse.IEventSourceInit) {
+    return new Observable<Event | sse.IOnMessageEvent>((subscriber) => {
         const eventSource = new EventSource(url, options);
-        eventSource.onmessage = x => subscriber.next(JSON.parse(x.data));
+        eventSource.onopen = x => subscriber.next(x);
+        eventSource.onmessage = x => subscriber.next(x);
         eventSource.onerror = x => subscriber.error(x);
     });
 }

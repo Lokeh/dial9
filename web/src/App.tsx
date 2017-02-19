@@ -2,7 +2,7 @@ import * as React from 'react';
 import 'whatwg-fetch';
 import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import {
   Grid,
   Row,
@@ -12,6 +12,7 @@ import {
   ListGroupItem,
   ProgressBar,
 } from 'react-bootstrap';
+import { Toast } from './components/Toast';
 import { fromEventSource } from './lib/eventSource';
 
 interface User {
@@ -19,7 +20,7 @@ interface User {
   number: string;
 };
 
-interface AppSource {
+interface AppState {
   selected: User;
   locked: boolean;
   timeout: number;
@@ -27,14 +28,17 @@ interface AppSource {
   users: {
     [key: string]: string;
   };
+  showConnected: boolean;
 };
 
 const host = process.env.NODE_ENV === 'development' ?
   'http://localhost:4000' :
   '';
 
-class App extends React.Component<null, AppSource> {
-  eventSource: Subscription;
+class App extends React.Component<null, AppState> {
+  stateStream: Subscription;
+  connectedStream: Subscription;
+
   constructor() {
     super();
     this.state = {
@@ -48,23 +52,35 @@ class App extends React.Component<null, AppSource> {
       users: {
         'default': 'whatever',
       },
+      showConnected: false,
     };
   }
 
   componentWillMount() {
-    this.eventSource = fromEventSource<AppSource>(`${host}/state`).subscribe(
-      (res) => {
-        this.setState(res);
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    const eventSource = fromEventSource(`${host}/state`);
+    this.stateStream = eventSource
+      .filter(({ type }: Event) => type === 'message')
+      .subscribe(
+        (res: sse.IOnMessageEvent) => {
+          const state = JSON.parse(res.data);
+          this.setState(state);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
+    this.connectedStream = eventSource
+      .filter(({ type }: Event) => type === "open")
+      .do(() => this.setState({ showConnected: true }))
+      .concatMap(() => Observable.timer(5000))
+      .do(() => this.setState({ showConnected: false }))
+      .subscribe();
+
   }
 
   componentWillUnmount() {
-    this.eventSource.unsubscribe();
+    this.stateStream.unsubscribe();
   }
 
   selectUser(name: string) {
@@ -72,6 +88,7 @@ class App extends React.Component<null, AppSource> {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Grid style={{maxWidth: 600}}>
@@ -99,6 +116,13 @@ class App extends React.Component<null, AppSource> {
             </Col>
           </Row>
         </Grid>
+        {this.state.showConnected ?
+          <Toast>
+            <div style={{ textAlign: 'center' }}>
+              Connected
+            </div>
+          </Toast> : null
+        }
       </div>
     );
   }
