@@ -20,9 +20,9 @@ Back-end:
 - [ ] Logging (email/SMS/file)
 
 Web front end:
-- [ ] UX/UI
-- [ ] User selection
-- [ ] Receive app state stream
+- [x] UX/UI
+- [x] User selection
+- [x] Receive app state stream
 
 Mobile front end:
 - [ ] UX/UI

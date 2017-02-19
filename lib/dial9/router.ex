@@ -40,7 +40,6 @@ defmodule Dial9.Router do
     |> put_resp_header("content-type", "text/event-stream")
     |> send_chunked(200)
     send_message(conn, Poison.encode! Dial9.State.get)
-
     Dial9.Events
     |> GenEvent.stream
     |> Stream.each(fn {:update, state} ->
