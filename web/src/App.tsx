@@ -116,13 +116,11 @@ class App extends React.Component<null, AppState> {
             </Col>
           </Row>
         </Grid>
-        {this.state.showConnected ?
-          <Toast>
-            <div style={{ textAlign: 'center' }}>
-              Connected
-            </div>
-          </Toast> : null
-        }
+        <Toast visible={this.state.showConnected}>
+          <div style={{ textAlign: 'center' }}>
+            Connected
+          </div>
+        </Toast>
       </div>
     );
   }

@@ -1,0 +1,14 @@
+.toast-enter {
+  transform: translateY(-100%);
+}
+.toast-enter.toast-enter-active {
+  transform: translateY(100%);
+  transition: transform 300ms ease-in-out;
+}
+.toast-leave {
+  transform: translateY(0%);
+}
+.toast-leave.toast-leave-active {
+  transform: translateY(-100%);
+  transition: transform 300ms ease-in-out;
+}
