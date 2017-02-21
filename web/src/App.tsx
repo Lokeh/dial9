@@ -33,7 +33,7 @@ interface AppState {
 
 const host = process.env.NODE_ENV === 'development' ?
   'http://localhost:4000' :
-  '';
+  '/dial9';
 
 class App extends React.Component<null, AppState> {
   stateStream: Subscription;
