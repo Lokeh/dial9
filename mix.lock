@@ -4,6 +4,7 @@
   "cowlib": {:hex, :cowlib, "1.0.2", "9d769a1d062c9c3ac753096f868ca121e2730b9a377de23dec0f7e08b1df84ee", [:make], []},
   "credo": {:hex, :credo, "0.6.1", "a941e2591bd2bd2055dc92b810c174650b40b8290459c89a835af9d59ac4a5f8", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, optional: false]}]},
   "dialyxir": {:hex, :dialyxir, "0.4.4", "e93ff4affc5f9e78b70dc7bec7b07da44ae1ed3fef38e7113568dd30ad7b01d3", [:mix], []},
+  "distillery": {:hex, :distillery, "1.1.2", "4cf32ecc70ca7eecca9e52e111edf320bd78011050825863cd8bc7ffee686c5d", [:mix], []},
   "ex_twiml": {:hex, :ex_twiml, "2.1.2", "5318c31c28d68b5daea98748b668de9827f166dff55f64be2537735e9d58d308", [:mix], []},
   "mime": {:hex, :mime, "1.0.1", "05c393850524767d13a53627df71beeebb016205eb43bfbd92d14d24ec7a1b51", [:mix], []},
   "plug": {:hex, :plug, "1.3.0", "6e2b01afc5db3fd011ca4a16efd9cb424528c157c30a44a0186bcc92c7b2e8f3", [:mix], [{:cowboy, "~> 1.0.1 or ~> 1.1", [hex: :cowboy, optional: true]}, {:mime, "~> 1.0", [hex: :mime, optional: false]}]},
