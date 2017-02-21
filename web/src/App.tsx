@@ -71,7 +71,7 @@ class App extends React.Component<null, AppState> {
       );
 
     this.connectedStream = eventSource
-      .filter(({ type }: Event) => type === "open")
+      .filter(({ type }: Event) => type === 'open')
       .do(() => this.setState({ showConnected: true }))
       .concatMap(() => Observable.timer(5000))
       .do(() => this.setState({ showConnected: false }))
@@ -91,14 +91,10 @@ class App extends React.Component<null, AppState> {
     console.log(this.state);
     return (
       <div>
-        <Grid style={{maxWidth: 600}}>
-          <Row><Col><PageHeader style={{textAlign: 'center'}}>Dial9</PageHeader></Col></Row>
+        <Grid style={{ maxWidth: 600, margin: '10px' }}>
+          <Row><Col><PageHeader style={{ textAlign: 'center' }}>Dial9</PageHeader></Col></Row>
           <Row>
             <Col>
-              {this.state.time_left !== 0 ?
-                <ProgressBar max={this.state.timeout} now={this.state.time_left - 1} /> :
-                null
-              }
               <ListGroup>
                 {Object.keys(this.state.users)
                   .filter(name => name !== 'default')
@@ -113,6 +109,10 @@ class App extends React.Component<null, AppState> {
                     </ListGroupItem>
                   )}
               </ListGroup>
+              {this.state.time_left !== 0 ?
+                <ProgressBar max={this.state.timeout} now={this.state.time_left - 1} /> :
+                null
+              }
             </Col>
           </Row>
         </Grid>

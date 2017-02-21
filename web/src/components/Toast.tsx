@@ -20,7 +20,7 @@ const styles = {
 export function Toast({ children, visible }: ToastProps) {
     return (
         <ReactCSSTransitionGroup
-            transitionName='toast'
+            transitionName="toast"
             transitionEnterTimeout={200}
             transitionLeaveTimeout={300}
         >
